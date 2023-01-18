@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Coropleth map with dynamics data from google sheets</title>
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <link rel="stylesheet" href="./plugin/leaflet-master/leaflet.css" />
+     <script src="./plugin/leaflet-master/leaflet.js"></script>  
+	<!-- init two libraries for data parsing and fetching -->
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+	<!-- put full screen plugfa-inverse -->
+	<link rel="stylesheet" href="./plugin/leaflet.fullscreen-master/Control.FullScreen.css" />
+	<script src="./plugin/leaflet.fullscreen-master/Control.FullScreen.js"></script>
+	<script src="./plugin/Proj4Leaflet-master/lib/proj4.js"></script>
+	<script src="./plugin/Proj4Leaflet-master/src/proj4leaflet.js"></script>
+	<link rel="stylesheet"   href="style.css">
+	<style>
+		 body {
+			height: 100%;
+			margin: auto;
+		}
+	</style>
+
+	
+</style>
+</head>
+<body>
+
+	<!-- //Tabs at the top -->
+	<div id="tabs">
+		<div id="map-tab" class="buttonTab"  onclick="showMap()">Map View</div>
+		<div id="list-tab" class = "buttonTab" onclick="showTable()">List View</div>
+	  </div>
+	  
+
+<div id="map-and-table-container">
+			<!-- //Map tab -->
+	<div id='map' style="display: true;">
+		<div id="reset_view" class="resetbutton">Reset view</div>
+		<div id="loader" class="loader"></div>
+	</div>
+
+	<!-- //Table tab -->
+	<div id = 'table-container' style="display:none">
+		<div class="custom-select" style="width:200px;">
+			<div id = 'select-container' class="selectContainer">
+				<div class="sort-label">Sort by:</div>
+				<select id="sort-options" class = "sort-options" value="alphabetical">
+					<option value="alphabetical">Alphabetical</option>
+					<option value="HighToLow">IBP Engagement High to Low</option>
+					<option value="LowToHigh">IBP Engagement Low to High</option>
+				</select>
+			
+			</div>
+			
+		</div>
+		<div id="legendContainer" style="width:320px;"></div>
+		<div id="table" ></div>
+	</div>
+	
+</div>
+
+
+<script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
+
+
+
