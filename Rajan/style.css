@@ -179,6 +179,19 @@ color: #000;
                     padding:8px 8px; 
                 }
 
+                  /* Make responsivnes from there */
+                  @media (max-width:765px) {           
+                    .legend {
+                      min-width:375px;
+                     
+                  };
+
+                }
+
+
+
+                
+
 
              
                 .legend2 {
@@ -499,4 +512,20 @@ color: #000;
         font-weight: 650;
         margin-top: 5px !important; /* sets 10px of top padding on each option */
       }
+
+
+     
+
+    
+
+
+    
+    
+ 
+
+
+      
+
+
+      
 
