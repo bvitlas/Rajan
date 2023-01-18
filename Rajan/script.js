@@ -9,7 +9,7 @@ if (window.innerWidth > 768) {
 else
   
   {  getcenter = [40, 0]
-     getzoom =0;  
+     getzoom =0.5;  
   } ;
 
   
