@@ -247,7 +247,7 @@ L.control.fullscreen({
 
  
 	//set the max bounds to the whole world
-	var bounds = [[-90, -180], [90, 180]];
+	var bounds = [[-90, -150], [90, 180]];
 	map.setMaxBounds(bounds);
 
 
