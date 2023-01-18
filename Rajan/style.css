@@ -193,7 +193,7 @@ color: #000;
                     /* Make responsivnes from there */
                       @media (max-width:765px) {           
                                 .legend2 {
-                                  width:360px;
+                                  width:375px;
                                  
                               };
           
