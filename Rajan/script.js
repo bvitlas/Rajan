@@ -9,7 +9,7 @@ if (window.innerWidth > 768) {
 else
   
   {  getcenter = [40, 0]
-     getzoom =1;  
+     getzoom =0;  
   } ;
 
   
@@ -364,7 +364,7 @@ legend.addTo(map);
 		// Closing the loader
 		setTimeout(() => { 
 				loading.style.display = "none";   
-		  }, 200) 
+		  }, 750) 
     }	
 });
 
