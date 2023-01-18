@@ -448,6 +448,14 @@ color: #000;
         height:auto;
       }
 
+
+      @media screen and (max-width:765px) {
+        .selectContainer {
+        left:3% !important;
+
+        }
+      }
+
       .sort-options {
           display:inline-block;
           position:relative; 
