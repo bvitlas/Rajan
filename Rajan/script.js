@@ -15,9 +15,15 @@ else
   
    //Function for toggling between Map and List
   function showMap() {
+
 	document.getElementById("map").style.display = "block";
     document.getElementById("mapContainerTop").style.display = "block";
 	document.getElementById("table-container").style.display = "none";
+     
+		// Closing the loader
+		setTimeout(() => { 
+            map.invalidateSize();  
+      }, 750) 
     //Style buttons
     document.getElementById("map-tab").classList.add("buttonSelected");
     document.getElementById("list-tab").classList.remove("buttonSelected");
@@ -227,10 +233,6 @@ function renderTable (csvData) {
 // });
 
 	
-function initMap() {
-
-    
-}
 var map = L.map('map', {
     zoomDelta: 0.25,
     zoomSnap: 0.10,
@@ -239,6 +241,7 @@ var map = L.map('map', {
 	zoom: getzoom,
 	maxZoom: 5.5,
 	minZoom:0, 
+    invalidateSize:true,
 	attributionControl: false
 	});
 
@@ -252,7 +255,7 @@ L.control.fullscreen({
     position: 'topleft'
 }).addTo(map);
 
- 
+
 	//set the max bounds to the whole world
 	var bounds = [[-90, -150], [90, 180]];
 	map.setMaxBounds(bounds);
