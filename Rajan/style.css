@@ -8,8 +8,18 @@ body {
 } */
 
 #map-and-table-container {
-    border: 3px solid rgb(209, 209, 209);
     padding: 10px;
+    }
+
+
+    #mapContainerTop {
+      border: 3px solid rgb(209, 209, 209);
+
+    }
+
+    #tableContainerTop {
+      border: 3px solid rgb(209, 209, 209);
+
     }
 
  
