@@ -22,6 +22,7 @@ body {
     border:51px solid red;
     z-index:2 !important;
     overflow:hidden !important;
+    border: 3px solid rgb(209, 209, 209);
 };  
 
 .leaflet-container {
