@@ -178,7 +178,7 @@ color: #000;
                 .legend2 {
                   display: flex;
                   flex-wrap: wrap; /* this makes the items wrap to the next line */
-                  width:auto !important;
+                  width:100% !important;
                   border: 0.5px solid rgba(157, 157, 157, 0.757);
                   margin: 15px 0 15px 0;
                   padding:8px 8px; 
