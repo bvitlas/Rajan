@@ -188,8 +188,10 @@ color: #000;
                                   /* Make responsivnes from there */
                     @media (max-width:765px) {           
                       .legend {
+                        width:auto;
                         min-width: none !important;
-                        left:-10px !important; 
+                        left:-10px !important;
+                        bottom:15px; 
                     };
 
                   }
@@ -259,13 +261,17 @@ color: #000;
                   width: 570px !important; 
               }
 
-              @media  (max-width: 764px) {
+              @media (max-width: 764px) {
                 .legend-items2 {
                  width:450px !important;
 
-                }
-                
-              }
+                } };
+
+                @media  (max-width: 564px) {
+                  .legend-items2 {
+                   width:100% !important;
+  
+                  }};
               
                  .tabs {
                   display:block !important;
