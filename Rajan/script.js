@@ -17,6 +17,7 @@ else
   function showMap() {
 	document.getElementById("map").style.display = "block";
 	document.getElementById("table-container").style.display = "none";
+    //Style buttons
     document.getElementById("map-tab").classList.add("buttonSelected");
     document.getElementById("list-tab").classList.remove("buttonSelected");
   }
@@ -24,6 +25,8 @@ else
   function showTable() {
 	document.getElementById("table-container").style.display = "block";
 	document.getElementById("map").style.display = "none";
+    document.getElementById("mapContainerTop").style.display = "none";
+    //Style buttons
     document.getElementById("list-tab").classList.add("buttonSelected");
     document.getElementById("map-tab").classList.remove("buttonSelected");
   };
@@ -223,6 +226,10 @@ function renderTable (csvData) {
 // });
 
 	
+function initMap() {
+
+    
+}
 var map = L.map('map', {
     zoomDelta: 0.25,
     zoomSnap: 0.10,
