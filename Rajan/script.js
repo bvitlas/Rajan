@@ -230,8 +230,7 @@ var map = L.map('map', {
 	center: getcenter, 
 	zoom: getzoom,
 	maxZoom: 5.5,
-	minZoom:0,
-	maxBounds: bounds, 
+	minZoom:0, 
 	attributionControl: false
 	});
 
