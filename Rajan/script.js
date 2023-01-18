@@ -16,6 +16,7 @@ else
    //Function for toggling between Map and List
   function showMap() {
 	document.getElementById("map").style.display = "block";
+    document.getElementById("mapContainerTop").style.display = "block";
 	document.getElementById("table-container").style.display = "none";
     //Style buttons
     document.getElementById("map-tab").classList.add("buttonSelected");
