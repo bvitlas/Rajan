@@ -13,7 +13,6 @@ body {
 
 
     #mapContainerTop {
-      border: 3px solid rgb(209, 209, 209);
 
     }
 
@@ -86,7 +85,7 @@ body {
 .leaflet-popup-content-wrapper {
 background-color: #f2f2f2;
 border-radius: 0 !important;
-border:2.5px solid #FFD8C1 !important;
+border:2.5px solid #FF863A !important;
 font-size: 0.70rem !important;
 padding:0px !important;
 margin:0;
@@ -95,6 +94,13 @@ margin:0;
 .leaflet-popup {
 border-radius: 0% !important;
 padding:1px
+}
+
+.leaflet-popup-tip {
+  display:none !important;
+  background: white;
+  color: #333;
+  box-shadow: 0 3px 14px rgb(0 0 0 / 40%);
 }
 
 .leaflet-popup-title {
@@ -315,6 +321,8 @@ color: #000;
                  .buttonTab {
                   font-size: 0.90rem;
                   display:inline-block;
+                  background-color: #053D4F;
+                  color:white;
                   cursor: pointer;
                   padding:5px 12px;
                   -webkit-user-select: none; /* Safari */
@@ -331,8 +339,8 @@ color: #000;
                  }
 
                  .buttonSelected {
-                  background-color: #053D4F;
-                  color:white; /* Change this to the desired active color */
+                  background-color: white;
+                  color:#222221; /* Change this to the desired active color */
               }
 
 
