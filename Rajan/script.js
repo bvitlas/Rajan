@@ -11,9 +11,9 @@ if (window.innerWidth > 768) {
 else
   
   {  getcenter = [10, 0]
-     getzoom =0.5; 
+     getzoom =0.25; 
      columns = 2;
-     minzoom=0.5; 
+     minzoom=0.25; 
  
   } ;
 
