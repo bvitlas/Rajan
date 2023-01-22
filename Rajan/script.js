@@ -2,14 +2,19 @@
 let getcenter, getzoom, geoLocControl; 
 
 if (window.innerWidth > 768) {
-   getcenter = [40, 0];
-   getzoom = 1.85; 
+   getcenter = [10, 0];
+   getzoom = 1.45;
+   columns = 4; 
+   minzoom = 1.45
 }
    
 else
   
-  {  getcenter = [40, 0]
-     getzoom =0.5;  
+  {  getcenter = [10, 0]
+     getzoom =0.5; 
+     columns = 2;
+     minzoom=0.5; 
+ 
   } ;
 
   
@@ -20,10 +25,6 @@ else
     document.getElementById("mapContainerTop").style.display = "block";
 	document.getElementById("table-container").style.display = "none";
      
-		// Closing the loader
-		setTimeout(() => { 
-            map.invalidateSize();  
-      }, 750) 
     //Style buttons
     document.getElementById("map-tab").classList.add("buttonSelected");
     document.getElementById("list-tab").classList.remove("buttonSelected");
@@ -49,6 +50,8 @@ Papa.parse("https://docs.google.com/spreadsheets/d/15Fhb7nWSG0WlKzlD96Qy8VfjHuZP
         var csvData = results.data;
         //load geojson
         d3.json("./data/countires.geojson").then(function(geojson) {
+
+            //Join Data
             geojson.features.forEach(function(feature) {
                 var row = csvData.filter(function(d) {
                     return d.alpha2 === feature.properties.ISO_A2
@@ -57,7 +60,30 @@ Papa.parse("https://docs.google.com/spreadsheets/d/15Fhb7nWSG0WlKzlD96Qy8VfjHuZP
                     Object.assign(feature.properties, row[0]);
                 }
             });
-            
+
+            // //Transform Geojson file
+            // var transformedcoordinates =  // Iterate over the GeoJSON features
+            // geojson.features.forEach(function(feature) {
+            //     // Check if the feature type is MultiPolygon
+            //     if (feature.geometry.type === 'MultiPolygon') {
+            //     var polygons = feature.geometry.coordinates;
+            //     // Iterate over each polygon
+            //     polygons.forEach(function(polygon) {
+            //         // Iterate over each ring of the polygon
+            //         polygon.forEach(function(ring) {
+            //         // Iterate over each coordinate of the ring
+            //         ring.forEach(function(coordinate, index) {
+            //             // Apply the transformation function to the coordinate
+            //             ring[index] = transform.forward(coordinate);
+            //         });
+            //         });
+            //     });
+            //     }
+            // }); 
+
+
+
+         
 
 // Get Table Dom
 var sortOptions = document.getElementById("sort-options");
@@ -167,7 +193,7 @@ function renderTable (csvData) {
 
         // Add the legend div to the table 
         const grades = ['#52C3C9',  '#0083A9', '#034A8A'];
-        const labels = ["Open Budget Survey Countires" , "Countires with Multiple Projects", "Country Office"];
+        const labels = ["Open Budget Survey Countires" , "Countries with Multiple Projects", "Country Office"];
         
         //Legend DIV
         var legendDiv = document.createElement("legend2");
@@ -194,7 +220,7 @@ function renderTable (csvData) {
         // Iterate over the data array and create a new row for each object
         for(var i = 0; i < csvData.length; i+=4){
             var row = document.createElement("tr");
-            for(var j = i; j < i+4; j++){
+            for(var j = i; j < i+columns; j++){
                 if(csvData[j]){
                     var cell = document.createElement("td");
                     if(j == i+3){
@@ -225,24 +251,25 @@ function renderTable (csvData) {
 //-----------------------------------------------------
 //map init
 
-// // create map with custom projection
-// var crs = new L.Proj.CRS('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs', {
-//     resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25],
-//     origin: [-180, 90],
-//     bounds: L.bounds([-180, -90], [180, 90])
-// });
+var crs = new L.Proj.CRS('EPSG:3857', '+proj=robin +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs', {
+    resolutions: [65536, 32768, 16384, 8192, 4096, 2048] 
+});
+
 
 	
 var map = L.map('map', {
+    crs: crs,
     zoomDelta: 0.25,
     zoomSnap: 0.10,
-    crs:L.CRS.EPSG3395,
 	center: getcenter, 
 	zoom: getzoom,
 	maxZoom: 5.5,
-	minZoom:0, 
+	minZoom:minzoom, 
     invalidateSize:true,
-	attributionControl: false
+	attributionControl: false,
+    continuousWorld: true,
+     worldCopyJump: false,
+     projection: 'naturalEarth' // starting projection
 	});
 
     //Basemap loading
@@ -256,9 +283,9 @@ L.control.fullscreen({
 }).addTo(map);
 
 
-	//set the max bounds to the whole world
-	var bounds = [[-90, -150], [90, 180]];
-	map.setMaxBounds(bounds);
+	// //set the max bounds to the whole world
+	// var bounds = [[-90, -180], [90, 180]];
+	// map.setMaxBounds(bounds);
 
 
 
@@ -283,10 +310,10 @@ L.control.fullscreen({
 		};
 	}
 
-	//Zoom to clicked feature
-	function zoomToFeature(e) {
-		map.fitBounds(e.target.getBounds());
-	}
+	// //Zoom to clicked feature - do not works weel with changed projection
+	// function zoomToFeature(e) {
+	// 	map.fitBounds(e.target.getBounds());
+	// }
 
    
 	//Highlight selected feature
@@ -311,9 +338,15 @@ L.control.fullscreen({
 	//Functionalities the data will have
 	function onEachFeature(feature, layer) {
 		layer.on({
-			mouseover: highlightFeature,
-			mouseout: resetHighlight,
-			click: zoomToFeature
+            mouseover: function(e) {
+                highlightFeature(e);
+                this.openPopup();
+            },
+            
+            mouseout: function(e) {
+                resetHighlight(e);
+                this.closePopup();
+            }
 		});
 		layer.bindPopup("<p style='display:inline-block; margin:0; padding:0 5px;'>" + feature.properties.ADMIN + "</p>" +
 		 "<div class='circle' style='background-color:"+ (feature.properties.Type === "" ? "#ffffff00" :  getColor(feature.properties.Type))+"; width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:2px margin-top:1px; padding:0 0;'></div>")
@@ -321,6 +354,10 @@ L.control.fullscreen({
 	  }
 
 
+
+   
+
+  
 
 //Load geojson data to the Map API
 var geojson=L.geoJSON(geojson, {
