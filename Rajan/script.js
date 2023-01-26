@@ -5,15 +5,17 @@ if (window.innerWidth > 768) {
    getcenter = [10, 0];
    getzoom = 1.45;
    columns = 4; 
-   minzoom = 1.45
+   minzoom = 1.45;
+   className = '<div class="legend-items">';
 }
    
 else
   
   {  getcenter = [10, 0]
-     getzoom =0.25; 
+     getzoom =0.08; 
      columns = 2;
-     minzoom=0.25; 
+     minzoom=0.05;
+     className = '<div class="legend-items2">'; 
  
   } ;
 
@@ -61,25 +63,6 @@ Papa.parse("https://docs.google.com/spreadsheets/d/15Fhb7nWSG0WlKzlD96Qy8VfjHuZP
                 }
             });
 
-            // //Transform Geojson file
-            // var transformedcoordinates =  // Iterate over the GeoJSON features
-            // geojson.features.forEach(function(feature) {
-            //     // Check if the feature type is MultiPolygon
-            //     if (feature.geometry.type === 'MultiPolygon') {
-            //     var polygons = feature.geometry.coordinates;
-            //     // Iterate over each polygon
-            //     polygons.forEach(function(polygon) {
-            //         // Iterate over each ring of the polygon
-            //         polygon.forEach(function(ring) {
-            //         // Iterate over each coordinate of the ring
-            //         ring.forEach(function(coordinate, index) {
-            //             // Apply the transformation function to the coordinate
-            //             ring[index] = transform.forward(coordinate);
-            //         });
-            //         });
-            //     });
-            //     }
-            // }); 
 
 
 
@@ -188,22 +171,22 @@ function renderTable (csvData) {
         legendContainer.classList.add("legend-container");
          // Create the table head
          var thead = document.createElement("thead");
+         legendContainer.classList.add("legend-container");
 
-       
 
         // Add the legend div to the table 
         const grades = ['#52C3C9',  '#0083A9', '#034A8A'];
-        const labels = ["Open Budget Survey Countires" , "Countries with Multiple Projects", "Country Office"];
+        const labels = ["Open Budget Survey Countries" , "Countries with Multiple Projects", "Country Office"];
         
         //Legend DIV
         var legendDiv = document.createElement("legend2");
         legendDiv.classList.add("legend2");
         legendDiv.innerHTML = '<div class="legend-title2">IBP Engagement</div>'
         legendDiv.innerHTML += '<div class="legend-items2"></div>'
-        for (var i = 0; i < grades.length; i++) {
-            legendDiv.innerHTML += '<div class="legend-column">' +
+        for (let i = 0; i < grades.length; i++) {
+            legendDiv.innerHTML += className +
             '<i class="legend-circle" style="background:' + grades[i] + '"></i>' +
-            '<div class="legend-item-table">' + labels[i] + '</div>' +
+            '<div class="legend2-rows">' + labels[i] + '</div>' +
             '</div>';
         }
         thead.appendChild(legendDiv);
@@ -251,7 +234,7 @@ function renderTable (csvData) {
 //-----------------------------------------------------
 //map init
 
-var crs = new L.Proj.CRS('EPSG:3857', '+proj=robin +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs', {
+var crs = new L.Proj.CRS('EPSG:54009', '+proj=robin +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs', {
     resolutions: [65536, 32768, 16384, 8192, 4096, 2048] 
 });
 
@@ -269,12 +252,10 @@ var map = L.map('map', {
 	attributionControl: false,
     continuousWorld: true,
      worldCopyJump: false,
-     projection: 'naturalEarth' // starting projection
+   
 	});
 
-    //Basemap loading
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	}).addTo(map);
+
 
 
 //FULL SCREEN CONTROL
@@ -325,7 +306,6 @@ L.control.fullscreen({
 			dashArray: '',
 		});
 	
-		layer.bringToFront();
 	};
 
 	//Reset Highlighted feature
@@ -340,24 +320,22 @@ L.control.fullscreen({
 		layer.on({
             mouseover: function(e) {
                 highlightFeature(e);
-                this.openPopup();
             },
             
             mouseout: function(e) {
                 resetHighlight(e);
-                this.closePopup();
+                
             }
 		});
 		layer.bindPopup("<p style='display:inline-block; margin:0; padding:0 5px;'>" + feature.properties.ADMIN + "</p>" +
-		 "<div class='circle' style='background-color:"+ (feature.properties.Type === "" ? "#ffffff00" :  getColor(feature.properties.Type))+"; width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:2px margin-top:1px; padding:0 0;'></div>")
+                "<div class='circle' style='background-color:"+ (feature.properties.Type === "" ? "#ffffff00" :  getColor(feature.properties.Type))+"; width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:2px margin-top:1px; padding:0 0;'></div>" +
+                
+                (feature.properties.URL ? "<br><a href='" + feature.properties.URL + "' target='_blank' style='text-align:center;display:block;margin:auto;'>Link</a>" : "") +
+                "</div>",
+                );
 
 	  }
 
-
-
-   
-
-  
 
 //Load geojson data to the Map API
 var geojson=L.geoJSON(geojson, {
@@ -372,7 +350,7 @@ var legend = L.control({position: 'bottomleft'});
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = ['#52C3C9',  '#0083A9', '#034A8A'],
-        labels = ["Open Budget Survey Countires" , "Countires with Multiple Projects", "Country Office"];
+        labels = ["Open Budget Survey Countries" , "Countries with Multiple Projects", "Country Office"];
     //Add title to the legend
     div.innerHTML += '<div class="legend-title">IBP Engagement</div>'
     div.innerHTML += '<div class="legend-bar"></div>'
