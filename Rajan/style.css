@@ -183,7 +183,7 @@ color: #000;
                 .legend {
                   display: flex;
                   flex-wrap: wrap;
-                  min-width: 520px;
+                  width: 520px;
                   width:auto !important;
                   border: 0.5px solid rgba(157, 157, 157, 0.655);
                   margin: 15px 0 15px 0;
@@ -195,8 +195,8 @@ color: #000;
                 @media (max-width:765px) {           
                   .legend {
                     width:auto;
-                    width: 250px !important;
-                    left:-12px !important;
+                    width: 100% !important;
+                    left:-10px !important;
                     bottom:15px; 
                 };
 
