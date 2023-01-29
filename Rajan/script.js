@@ -327,12 +327,21 @@ L.control.fullscreen({
                 
             }
 		});
-		layer.bindPopup("<p style='display:inline-block; margin:0; padding:0 5px;'>" + feature.properties.ADMIN + "</p>" +
-                "<div class='circle' style='background-color:"+ (feature.properties.Type === "" ? "#ffffff00" :  getColor(feature.properties.Type))+"; width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:2px margin-top:1px; padding:0 0;'></div>" +
-                
-                (feature.properties.URL ? "<br><a href='" + feature.properties.URL + "' target='_blank' style='text-align:center;display:block;margin:auto;'>Link</a>" : "") +
-                "</div>",
-                );
+        
+        //Make and Style pop-up
+        layer.bindPopup(
+            "<p style='display:inline-block; margin:0; padding:0 5px;'>" + 
+              (feature.properties.URL ? 
+                "<a href='" + feature.properties.URL + "' style='text-decoration: none; color: black; border-bottom: 1px solid #FF863A;'>" + feature.properties.ADMIN + "</a>" : 
+                feature.properties.ADMIN
+              ) + 
+            "</p>" +
+            "<div class='circle' style='background-color:"+ (feature.properties.Type === "" ? "#ffffff00" :  getColor(feature.properties.Type))+"; width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:2px margin-top:1px; padding:0 0;'></div>" +
+            "</div>"
+          );
+          
+          
+
 
 	  }
 
