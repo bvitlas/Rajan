@@ -219,7 +219,16 @@ function renderTable (csvData) {
                     if(csvData[j].Type == "Country Office"){
                         cell.classList.add("Type3")
                     }
-                    cell.innerHTML = csvData[j].Country;
+
+                    if (csvData[j].URL) {
+                        var link = document.createElement("a");
+                        link.href = csvData[j].URL;
+                        link.innerHTML = csvData[j].Country;
+                        link.target = "_self";
+                        cell.appendChild(link);
+                      } else {
+                        cell.innerHTML = csvData[j].Country;
+                      }
                     row.appendChild(cell);
                 }
             }
