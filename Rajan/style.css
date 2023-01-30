@@ -12,17 +12,15 @@ body {
   }
 
 
-  a:link {
+  a {
     color: black !important;
-    font-size: 1em;
-    text-decoration-color: "#FF863A" ;
-}
-a:visited {
-    color: blue;
-}
-a:hover {
-    color: rgb(32, 26, 147);
-}
+    text-decoration: none; 
+    color: black; 
+    border-bottom: 2px solid #FF863A;
+    cursor:pointer;
+  }
+
+
 
 
 .map-container {
